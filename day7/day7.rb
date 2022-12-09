@@ -100,6 +100,21 @@ module Day7
         .sum(&:filesize)
     end
 
+    def part_2
+      min_required_space = 30_000_000
+
+      total_space = 70_000_000
+      used_space = parsed_tree.filesize
+      free_space = total_space - used_space
+
+      to_free_space = min_required_space - free_space
+
+      all_directories(parsed_tree)
+        .map(&:filesize)
+        .select { |size| size >= to_free_space }
+        .min
+    end
+
     private
 
     attr_reader :input

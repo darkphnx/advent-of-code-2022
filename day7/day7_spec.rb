@@ -116,35 +116,37 @@ end
 RSpec.describe Day7::Solutions do
   subject { described_class.new(input) }
 
+  let(:example_input) do
+    <<~EOF
+      $ cd /
+      $ ls
+      dir a
+      14848514 b.txt
+      8504156 c.dat
+      dir d
+      $ cd a
+      $ ls
+      dir e
+      29116 f
+      2557 g
+      62596 h.lst
+      $ cd e
+      $ ls
+      584 i
+      $ cd ..
+      $ cd ..
+      $ cd d
+      $ ls
+      4060174 j
+      8033020 d.log
+      5626152 d.ext
+      7214296 k
+    EOF
+  end
+
   describe '#part_1' do
     context 'example input' do
-      let(:input) do
-        <<~EOF
-          $ cd /
-          $ ls
-          dir a
-          14848514 b.txt
-          8504156 c.dat
-          dir d
-          $ cd a
-          $ ls
-          dir e
-          29116 f
-          2557 g
-          62596 h.lst
-          $ cd e
-          $ ls
-          584 i
-          $ cd ..
-          $ cd ..
-          $ cd d
-          $ ls
-          4060174 j
-          8033020 d.log
-          5626152 d.ext
-          7214296 k
-        EOF
-      end
+      let(:input) { example_input }
 
       it 'totals up all directories under 100,000 in size' do
         expect(subject.part_1).to eq(95_437)
@@ -156,6 +158,24 @@ RSpec.describe Day7::Solutions do
 
       it 'totals up to a mystery amount' do
         expect(subject.part_1).to eq(1_642_503)
+      end
+    end
+  end
+
+  describe '#part_2' do
+    context 'example input' do
+      let(:input) { example_input }
+
+      it 'returns the smallest directory that will free 8381165' do
+        expect(subject.part_2).to eq(24_933_642)
+      end
+    end
+
+    context 'real input' do
+      let(:input) { File.read(File.join(__dir__, 'input.txt')) }
+
+      it 'totals up to a mystery amount' do
+        expect(subject.part_2).to eq(6_999_588)
       end
     end
   end
